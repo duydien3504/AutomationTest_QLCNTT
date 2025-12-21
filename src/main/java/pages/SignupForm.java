@@ -8,6 +8,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import static constants.HomepageConstants.*;
 import static constants.SigninConstants.*;
 import static constants.SignupConstants.fullNameField;
+import static constants.SignupConstants.messageEmailExists;
 import static constants.SignupConstants.registerButton;
 
 public class SignupForm extends BasePage{
@@ -41,6 +42,18 @@ public class SignupForm extends BasePage{
     public boolean isDisplaySignupButton() {
         try {
             page.locator(registerButton)
+                    .waitFor(new Locator.WaitForOptions()
+                            .setState(WaitForSelectorState.VISIBLE)
+                            .setTimeout(1000));
+            return true;
+        } catch (PlaywrightException e) {
+            return false;
+        }
+    }
+
+    public boolean isDisplayMessageEmailExists() {
+        try {
+            page.locator(messageEmailExists)
                     .waitFor(new Locator.WaitForOptions()
                             .setState(WaitForSelectorState.VISIBLE)
                             .setTimeout(1000));

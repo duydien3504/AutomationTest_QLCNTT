@@ -96,4 +96,12 @@ public class TestConfig {
     public static String getSignupFullname() {
         return getProperty("test.signup.fullname");
     }
+
+    public static String getInvalidFormatEmail() {
+        return getProperty("test.invalidformat.email");
+    }
+
+    public static String getShortFullname() {
+        return getProperty("test.short.fullname");
+    }
 }

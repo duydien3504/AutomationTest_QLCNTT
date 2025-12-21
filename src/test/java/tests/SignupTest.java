@@ -62,4 +62,59 @@ public class SignupTest {
 
         Assert.assertFalse(signupForm.isDisplaySignupButton());
     }
+
+    @Test
+    public void tc_SignupFailWithInvalidFormatEmail() {
+        ExtentTestManager.info("Truy cap website");
+        signupForm.navigatetoWebsite();
+
+        ExtentTestManager.info("Mo form dang ky");
+        signupForm.displaySignupForm();
+
+        String email = TestConfig.getInvalidFormatEmail();
+        String password = TestConfig.getSignupPassword();
+        String fullname = TestConfig.getSignupFullname();
+
+        ExtentTestManager.info("Dang ky");
+        signupForm.signup(email, password, fullname);
+
+        Assert.assertTrue(signupForm.isDisplaySignupButton());
+    }
+
+    @Test
+    public void tc_SignupWithEmailExists() {
+        ExtentTestManager.info("Truy cap website");
+        signupForm.navigatetoWebsite();
+
+        ExtentTestManager.info("Mo form dang ky");
+        signupForm.displaySignupForm();
+
+        String email = TestConfig.getSignupEmail();
+        String password = TestConfig.getSignupPassword();
+        String fullname = TestConfig.getSignupFullname();
+
+        ExtentTestManager.info("Dang ky");
+        signupForm.signup(email, password, fullname);
+
+        Assert.assertTrue(signupForm.isDisplayMessageEmailExists());
+    }
+
+    @Test
+    public void tc_SignupWithShortFullname() {
+        ExtentTestManager.info("Truy cap website");
+        signupForm.navigatetoWebsite();
+
+        ExtentTestManager.info("Mo form dang ky");
+        signupForm.displaySignupForm();
+
+        String email = TestConfig.getSignupEmail();
+        String password = TestConfig.getSignupPassword();
+        String fullname = TestConfig.getShortFullname();
+
+        ExtentTestManager.info("Dang ky");
+        signupForm.signup(email, password, fullname);
+        page.waitForTimeout(1500);
+
+        Assert.assertTrue(signupForm.isDisplaySignupButton());
+    }
 }
