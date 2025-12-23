@@ -5,16 +5,14 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.SigninForm;
 import pages.SignupForm;
 import pages.WorkoutPlanPage;
 import utils.ExtentTestManager;
 import utils.TestConfig;
 
+@Listeners(ExtentTestNGListener.class)
 public class WorkoutPlanTest {
     private Playwright playwright;
     private Browser browser;
