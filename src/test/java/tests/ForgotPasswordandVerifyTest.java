@@ -1,24 +1,25 @@
 package tests;
 
-
-import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pages.ForgotPasswordandVerifyForm;
 import pages.SigninForm;
+import pages.SignupForm;
 import utils.ExtentTestManager;
 import utils.TestConfig;
 
 @Listeners(ExtentTestNGListener.class)
-public class SigninTest {
+public class ForgotPasswordandVerifyTest {
     private Playwright playwright;
     private Browser browser;
     private BrowserContext browserContext;
     private Page page;
     private SigninForm signinForm;
+    private ForgotPasswordandVerifyForm forgotPasswordandVerifyForm;
 
     @BeforeClass
     public void setupClass() {
@@ -31,6 +32,7 @@ public class SigninTest {
         browserContext = browser.newContext(TestConfig.getNewContextOptions());
         page = browserContext.newPage();
         signinForm = new SigninForm(page);
+        forgotPasswordandVerifyForm = new ForgotPasswordandVerifyForm(page);
     }
 
     @AfterClass
@@ -44,34 +46,46 @@ public class SigninTest {
     }
 
     @Test
-    public void tc_SigninSuccessful() {
+    public void tc_RqForgotPasswordSuccessful() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
-        ExtentTestManager.info("Mo popup signin");
+
+        ExtentTestManager.info("Mo form login");
         signinForm.displayLoginForm();
 
+        ExtentTestManager.info("Mo form Quen mat khau");
+        forgotPasswordandVerifyForm.displayForgotPWForm();
+
         String email = TestConfig.getLoginEmail();
-        String password = TestConfig.getLoginPassword();
+        ExtentTestManager.info("Yeu cau quen mat khau");
+        forgotPasswordandVerifyForm.forgotPassword(email);
 
-        ExtentTestManager.info("Dang Nhap");
-        signinForm.Signin(email,password);
+        page.waitForTimeout(5000);
 
-        Assert.assertTrue(signinForm.isDisplayLogoutButton());
+        Assert.assertTrue(forgotPasswordandVerifyForm.isDisplayVerifyForm());
     }
 
     @Test
-    public void tc_SigninFailwithInvalidAccount() {
+    public void tc_VerifyandUpdatePassword() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
-        ExtentTestManager.info("Mo popup signin");
+
+        ExtentTestManager.info("Mo form login");
         signinForm.displayLoginForm();
 
-        String email = TestConfig.getInvalidLoginEmail();
-        String password = TestConfig.getInvalidLoginPassword();
+        ExtentTestManager.info("Mo form Quen mat khau");
+        forgotPasswordandVerifyForm.displayForgotPWForm();
 
-        ExtentTestManager.info("Dang Nhap");
-        signinForm.Signin(email,password);
+        String email = TestConfig.getLoginEmail();
+        ExtentTestManager.info("Yeu cau quen mat khau");
+        forgotPasswordandVerifyForm.forgotPassword(email);
 
-        Assert.assertFalse(signinForm.isDisplayLogoutButton());
+        String otp = TestConfig.getOTP();
+        String password = TestConfig.getPassword();
+        ExtentTestManager.info("Xac thuc va cap nhat mat khau");
+        forgotPasswordandVerifyForm.verifyAndUpdatePassword(otp,password);
+        page.waitForTimeout(1500);
+
+        Assert.assertTrue(signinForm.isDisplaySigninButton());
     }
 }

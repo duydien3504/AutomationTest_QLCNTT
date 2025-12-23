@@ -6,4 +6,5 @@ public class SignupConstants {
     public static final String fullNameField = "input[name='full_name']";
     public static final String registerButton = "//button[@type='submit']";
     public static final String messageEmailExists = "//div[contains(text(), 'Email already exists')]";
+    public static final String textForgotPW = "//button[@type='button' and contains(text(), 'Forgot your password?')]";
 }

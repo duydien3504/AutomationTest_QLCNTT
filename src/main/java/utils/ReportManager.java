@@ -28,8 +28,8 @@ public class ReportManager {
         String reportPath = "reports/ExtentReport.html";
         ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
 
-        spark.config().setDocumentTitle("CapStone Testing 06");
-        spark.config().setReportName("Testing Demo 4 With Playwright");
+        spark.config().setDocumentTitle("Automation with Java Playwright");
+        spark.config().setReportName("Testing Demo Website Manage GYM");
         spark.config().setTheme(Theme.DARK);
 
         ExtentReports extent = new ExtentReports();

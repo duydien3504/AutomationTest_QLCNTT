@@ -6,17 +6,20 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pages.ProfilePage;
 import pages.SigninForm;
 import utils.ExtentTestManager;
+import utils.RandomFileUtils;
 import utils.TestConfig;
 
 @Listeners(ExtentTestNGListener.class)
-public class HomepageTest {
+public class EditProfileTest {
     private Playwright playwright;
     private Browser browser;
     private BrowserContext browserContext;
     private Page page;
     private SigninForm signinForm;
+    private ProfilePage profilePage;
 
     @BeforeClass
     public void setupClass() {
@@ -29,6 +32,7 @@ public class HomepageTest {
         browserContext = browser.newContext(TestConfig.getNewContextOptions());
         page = browserContext.newPage();
         signinForm = new SigninForm(page);
+        profilePage = new ProfilePage(page);
     }
 
     @AfterClass
@@ -42,23 +46,36 @@ public class HomepageTest {
     }
 
     @Test
-    public void tc_Logout() {
+    public void tc_EditProfile() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
-
-        ExtentTestManager.info("Mo form Dang Nhap");
+        ExtentTestManager.info("Mo popup signin");
         signinForm.displayLoginForm();
 
-        ExtentTestManager.info("Dang Nhap");
         String email = TestConfig.getLoginEmail();
         String password = TestConfig.getLoginPassword();
+
+        ExtentTestManager.info("Dang Nhap");
         signinForm.Signin(email,password);
-        page.waitForTimeout(2000);
 
-        ExtentTestManager.info("Dang Xuat");
-        signinForm.logOut();
+        ExtentTestManager.info("Truy cap trang Profile");
+        profilePage.displayProfilePage();
 
-        Assert.assertTrue(signinForm.isDisplaySigninButton());
+        ExtentTestManager.info("Mo form chinh sua Profile");
+        profilePage.displayEditProfileForm();
+
+        String imageFolder = "D:\\";
+        String randomAvatar = RandomFileUtils.getRandomJpg(imageFolder);
+        String fullname = TestConfig.getFullName();
+        String gender = TestConfig.getGender();
+        String date = TestConfig.getDate();
+        String goal = TestConfig.getGoal();
+        String level = TestConfig.getLevel();
+
+        ExtentTestManager.info("Thuc hien cap nhat thong tin");
+        profilePage.EditProfile(randomAvatar, fullname, gender, date, goal, level);
+        page.waitForTimeout(5000);
+
+        Assert.assertTrue(profilePage.isDisplayMessageSuccess());
     }
-
 }

@@ -39,3 +39,6 @@ build/
 .DS_Store
 
 config.properties
+/videos
+
+/reports

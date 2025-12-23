@@ -104,4 +104,48 @@ public class TestConfig {
     public static String getShortFullname() {
         return getProperty("test.short.fullname");
     }
+
+    public static String getOTP() {
+        return getProperty("test.otp");
+    }
+
+    public static String getPassword() {
+        return getProperty("test.password");
+    }
+
+    public static String getFullName() {
+        return getProperty("test.fullname");
+    }
+
+    public static String getGender() {
+        return getProperty("test.gender");
+    }
+
+    public static String getDate() {
+        return getProperty("test.date");
+    }
+
+    public static String getGoal() {
+        return getProperty("test.goal");
+    }
+
+    public static String getLevel() {
+        return getProperty("test.level");
+    }
+
+    public static String getNamePlan() {
+        return getProperty("test.nameplan");
+    }
+
+    public static String getStartDate() {
+        return getProperty("test.startdate");
+    }
+
+    public static String getEndDate() {
+        return getProperty("test.enddate");
+    }
+
+    public static String getDescription() {
+        return getProperty("test.description");
+    }
 }

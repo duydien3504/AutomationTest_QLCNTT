@@ -5,15 +5,13 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.SigninForm;
 import pages.SignupForm;
 import utils.ExtentTestManager;
 import utils.TestConfig;
 
+@Listeners(ExtentTestNGListener.class)
 public class SignupTest {
     private Playwright playwright;
     private Browser browser;
@@ -89,7 +87,7 @@ public class SignupTest {
         ExtentTestManager.info("Mo form dang ky");
         signupForm.displaySignupForm();
 
-        String email = TestConfig.getSignupEmail();
+        String email = TestConfig.getLoginEmail();
         String password = TestConfig.getSignupPassword();
         String fullname = TestConfig.getSignupFullname();
 

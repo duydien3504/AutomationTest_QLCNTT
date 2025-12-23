@@ -5,18 +5,23 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.SigninForm;
+import pages.SignupForm;
+import pages.WorkoutPlanPage;
 import utils.ExtentTestManager;
 import utils.TestConfig;
 
-@Listeners(ExtentTestNGListener.class)
-public class HomepageTest {
+public class WorkoutPlanTest {
     private Playwright playwright;
     private Browser browser;
     private BrowserContext browserContext;
     private Page page;
     private SigninForm signinForm;
+    private WorkoutPlanPage workoutPlanPage;
 
     @BeforeClass
     public void setupClass() {
@@ -29,6 +34,7 @@ public class HomepageTest {
         browserContext = browser.newContext(TestConfig.getNewContextOptions());
         page = browserContext.newPage();
         signinForm = new SigninForm(page);
+        workoutPlanPage = new WorkoutPlanPage(page);
     }
 
     @AfterClass
@@ -42,23 +48,33 @@ public class HomepageTest {
     }
 
     @Test
-    public void tc_Logout() {
+    public void tc_CreateWkPlanSuccesful() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
-
-        ExtentTestManager.info("Mo form Dang Nhap");
+        ExtentTestManager.info("Mo popup signin");
         signinForm.displayLoginForm();
 
-        ExtentTestManager.info("Dang Nhap");
         String email = TestConfig.getLoginEmail();
         String password = TestConfig.getLoginPassword();
+
+        ExtentTestManager.info("Dang Nhap");
         signinForm.Signin(email,password);
-        page.waitForTimeout(2000);
 
-        ExtentTestManager.info("Dang Xuat");
-        signinForm.logOut();
+        ExtentTestManager.info("Mo trang lich tap");
+        workoutPlanPage.displayWkPlanPage();
 
-        Assert.assertTrue(signinForm.isDisplaySigninButton());
+        ExtentTestManager.info("Mo form tao ke hoach tap luyen");
+        workoutPlanPage.displayCreatePlanForm();
+
+        String namePlan = TestConfig.getNamePlan();
+        String startDate = TestConfig.getStartDate();
+        String endDate = TestConfig.getEndDate();
+        String description = TestConfig.getDescription();
+
+        ExtentTestManager.info("Tao ke hoach tap luyen");
+        workoutPlanPage.CreateWorkoutPlan(namePlan, startDate, endDate, description);
+        page.waitForTimeout(1500);
+
+        Assert.assertTrue(workoutPlanPage.displayMessageSuccesful());
     }
-
 }
