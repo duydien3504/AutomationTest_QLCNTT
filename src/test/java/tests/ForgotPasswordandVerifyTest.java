@@ -56,7 +56,7 @@ public class ForgotPasswordandVerifyTest {
         ExtentTestManager.info("Mo form Quen mat khau");
         forgotPasswordandVerifyForm.displayForgotPWForm();
 
-        String email = TestConfig.getLoginEmail();
+        String email = TestConfig.getRsEmail();
         ExtentTestManager.info("Yeu cau quen mat khau");
         forgotPasswordandVerifyForm.forgotPassword(email);
 
@@ -76,7 +76,7 @@ public class ForgotPasswordandVerifyTest {
         ExtentTestManager.info("Mo form Quen mat khau");
         forgotPasswordandVerifyForm.displayForgotPWForm();
 
-        String email = TestConfig.getLoginEmail();
+        String email = TestConfig.getRsEmail();
         ExtentTestManager.info("Yeu cau quen mat khau");
         forgotPasswordandVerifyForm.forgotPassword(email);
 

@@ -148,4 +148,36 @@ public class TestConfig {
     public static String getDescription() {
         return getProperty("test.description");
     }
+
+    public static String getRsEmail() {
+        return getProperty("test.rs.email");
+    }
+
+    public static String getDay() {
+        return getProperty("test.day");
+    }
+
+    public static String getSchedule() {
+        return getProperty("test.schedule");
+    }
+
+    public static String getMuscle() {
+        return getProperty("test.muscle");
+    }
+
+    public static String getExLevel() {
+        return getProperty("test.exlevel");
+    }
+
+    public static String getSets() {
+        return getProperty("test.sets");
+    }
+
+    public static String getReps() {
+        return getProperty("test.reps");
+    }
+
+    public static String getRests() {
+        return getProperty("test.rests");
+    }
 }

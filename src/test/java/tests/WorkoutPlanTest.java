@@ -75,4 +75,45 @@ public class WorkoutPlanTest {
 
         Assert.assertTrue(workoutPlanPage.displayMessageSuccesful());
     }
+
+    @Test
+    public void tc_AddExintoSchedule() {
+        ExtentTestManager.info("Truy cap website");
+        signinForm.navigatetoWebsite();
+        ExtentTestManager.info("Mo popup signin");
+        signinForm.displayLoginForm();
+
+        String email = TestConfig.getLoginEmail();
+        String password = TestConfig.getLoginPassword();
+
+        ExtentTestManager.info("Dang Nhap");
+        signinForm.Signin(email,password);
+
+        ExtentTestManager.info("Mo trang lich tap");
+        workoutPlanPage.displayWkPlanPage();
+
+        ExtentTestManager.info("Mo form tao ke hoach tap luyen");
+        workoutPlanPage.displayCreatePlanForm();
+
+        String namePlan = TestConfig.getNamePlan();
+        String startDate = TestConfig.getStartDate();
+        String endDate = TestConfig.getEndDate();
+        String description = TestConfig.getDescription();
+
+        ExtentTestManager.info("Tao ke hoach tap luyen");
+        workoutPlanPage.CreateWorkoutPlan(namePlan, startDate, endDate, description);
+
+        String day = TestConfig.getDay();
+        String nameSchedule = TestConfig.getSchedule();
+        String muscle = TestConfig.getMuscle();
+        String exLevel = TestConfig.getExLevel();
+        String sets = TestConfig.getSets();
+        String reps = TestConfig.getReps();
+        String rests = TestConfig.getRests();
+
+        workoutPlanPage.AddExercise(day, nameSchedule, muscle, exLevel, sets, reps, rests);
+        page.waitForTimeout(1500);
+
+        Assert.assertTrue(workoutPlanPage.isDisplayMessageaddSuccessful());
+    }
 }
