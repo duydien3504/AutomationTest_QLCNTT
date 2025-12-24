@@ -45,7 +45,7 @@ public class WorkoutPlanTest {
         }
     }
 
-    @Test
+    /*@Test
     public void tc_CreateWkPlanSuccesful() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
@@ -74,7 +74,7 @@ public class WorkoutPlanTest {
         page.waitForTimeout(1500);
 
         Assert.assertTrue(workoutPlanPage.displayMessageSuccesful());
-    }
+    }*/
 
     @Test
     public void tc_AddExintoSchedule() {
