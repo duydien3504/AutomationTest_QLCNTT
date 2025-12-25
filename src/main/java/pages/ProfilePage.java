@@ -4,8 +4,10 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import constants.ProfileConstants;
 
 import java.nio.file.Paths;
+import java.util.Objects;
 
 import static constants.HomepageConstants.userAvatar;
 import static constants.ProfileConstants.*;
@@ -55,5 +57,19 @@ public class ProfilePage extends BasePage{
         }catch (PlaywrightException e) {
             return false;
         }
+    }
+
+    public boolean checkInfoAfUpdate(String fullname, String gender, String birtday, String goal, String level) {
+        String fullnameTxt = page.locator(fullName).innerText().trim();
+        String genderTxt = page.locator(ProfileConstants.gender).innerText().trim().toLowerCase();
+        String birtdayTxt = page.locator(birthday).innerText().trim();
+        String goalTxt = page.locator(ProfileConstants.goal).innerText().trim();
+        String levelTxt = page.locator(ProfileConstants.level).innerText().trim();
+
+        return Objects.equals(fullnameTxt, fullname)
+                && Objects.equals(genderTxt, gender)
+                && Objects.equals(birtdayTxt, birtday)
+                && Objects.equals(goalTxt, goal)
+                && Objects.equals(levelTxt, level);
     }
 }

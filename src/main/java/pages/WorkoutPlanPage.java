@@ -6,6 +6,8 @@ import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import constants.WorkoutPlanConstants;
 
+import java.util.Objects;
+
 import static constants.HomepageConstants.lichtapItem;
 import static constants.WorkoutPlanConstants.*;
 
@@ -79,6 +81,12 @@ public class WorkoutPlanPage extends BasePage{
         }
     }
 
+    public void reloadPage() {
+        page.navigate("http://localhost:3000/workout-plans");
+        clickElement(detailButton);
+        clickElement(muscleDay);
+    }
+
     public boolean displayMessageSuccesful() {
         try {
             page.locator(messageSuccesful).waitFor(new Locator.WaitForOptions()
@@ -89,4 +97,26 @@ public class WorkoutPlanPage extends BasePage{
             return false;
         }
     }
+
+    /*public boolean checkValue(String title, String description, String calendaR, String muscleday, String set, String rep, String rest) {
+        String titleTxt = page.locator(titlePlan).innerText();
+        String descriptionTxt = page.locator(descriptionPlan).first().innerText();
+
+        String calendarTxt = page.locator(calendar).innerText();
+        String formatCalendarTxt = calendarTxt.trim().replaceAll("\\s+", " - ");
+
+        String muscleDayTxt = page.locator(muscleDay).innerText();
+
+        String sets = page.locator(WorkoutPlanConstants.sets).innerText();
+        String reps = page.locator(WorkoutPlanConstants.reps).innerText();
+        String rests = page.locator(WorkoutPlanConstants.rests).innerText();
+
+        return Objects.equals(titleTxt, title)
+                && Objects.equals(descriptionTxt, description)
+                && Objects.equals(formatCalendarTxt, calendaR)
+                && Objects.equals(muscleDayTxt, muscleday)
+                && Objects.equals(sets, set)
+                && Objects.equals(reps, rep)
+                && Objects.equals(rests, rest);
+    }*/
 }

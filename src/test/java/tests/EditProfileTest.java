@@ -4,6 +4,7 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import constants.ProfileConstants;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.ProfilePage;
@@ -11,6 +12,9 @@ import pages.SigninForm;
 import utils.ExtentTestManager;
 import utils.RandomFileUtils;
 import utils.TestConfig;
+
+import static constants.ProfileConstants.birthday;
+import static constants.ProfileConstants.fullName;
 
 @Listeners(ExtentTestNGListener.class)
 public class EditProfileTest {
@@ -76,6 +80,10 @@ public class EditProfileTest {
         profilePage.EditProfile(randomAvatar, fullname, gender, date, goal, level);
         page.waitForTimeout(5000);
 
+
+        //So sanh message
         Assert.assertTrue(profilePage.isDisplayMessageSuccess());
+        //So sanh value
+        Assert.assertTrue(profilePage.checkInfoAfUpdate(fullname, gender.toLowerCase(), date, goal, level));
     }
 }

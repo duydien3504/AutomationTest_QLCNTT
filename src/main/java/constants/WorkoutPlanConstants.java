@@ -27,4 +27,13 @@ public class WorkoutPlanConstants {
     public static final String addExerciseSchedule = "//button[@type='submit' and contains(text(), 'Thêm vào lịch')]";
 
     public static final String messageAddExSuccessful = "//div[@role='status' and contains(text(), 'Đã thêm bài tập vào lịch thành công!')]";
+
+    //Check
+    public static final String titlePlan = "//div[contains(@class, 'p-6 rounded-2xl bg-moss-card')]//h2";
+    public static final String descriptionPlan = "//div[contains(@class, 'p-6 rounded-2xl bg-moss-card')]//p";
+    public static final String calendar = "//div[contains(@class, 'flex items-center gap-2 text-sm')]//span[2]";
+    public static final String muscleDay = "//div[contains(@class, 'mb-2')]//h4";
+    public static final String sets = "//div[contains(@class, 'flex items-center gap-1')][1]//span[1]";
+    public static final String reps = "//div[contains(@class, 'flex items-center gap-1')][2]//span[1]";
+    public static final String rests = "//div[contains(@class, 'flex items-center gap-1')][3]//span[1]";
 }

@@ -4,13 +4,18 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import constants.WorkoutPlanConstants;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.SigninForm;
 import pages.SignupForm;
 import pages.WorkoutPlanPage;
+import utils.DateUtils;
 import utils.ExtentTestManager;
 import utils.TestConfig;
+
+import static constants.WorkoutPlanConstants.*;
+import static constants.WorkoutPlanConstants.muscleDay;
 
 @Listeners(ExtentTestNGListener.class)
 public class WorkoutPlanTest {
@@ -112,8 +117,33 @@ public class WorkoutPlanTest {
         String rests = TestConfig.getRests();
 
         workoutPlanPage.AddExercise(day, nameSchedule, muscle, exLevel, sets, reps, rests);
+        page.waitForTimeout(1000);
+
+        workoutPlanPage.reloadPage();
         page.waitForTimeout(1500);
 
-        Assert.assertTrue(workoutPlanPage.isDisplayMessageaddSuccessful());
+        String formatCalendar = DateUtils.formatDateRange(startDate, endDate);
+
+        String titleTxt = page.locator(titlePlan).innerText();
+        String descriptionTxt = page.locator(descriptionPlan).first().innerText();
+
+        String calendarTxt = page.locator(calendar).innerText();
+        String formatCalendarTxt = calendarTxt
+                .replaceAll("\\s*-\\s*", " - ")
+                .replaceAll("\\s+", " ")
+                .trim();
+        String muscleDayTxt = page.locator(muscleDay).innerText();
+        String Sets = page.locator(WorkoutPlanConstants.sets).innerText();
+        String Reps = page.locator(WorkoutPlanConstants.reps).innerText();
+        String Rests = page.locator(WorkoutPlanConstants.rests).innerText().replaceAll("[^0-9]", "");;
+
+        Assert.assertEquals(titleTxt, namePlan, "Title");
+        Assert.assertEquals(descriptionTxt, description, "Mo ta");
+        Assert.assertEquals(formatCalendarTxt, formatCalendar, "Lich");
+        Assert.assertEquals(muscleDayTxt, nameSchedule, "Ngay tap");
+        Assert.assertEquals(Sets, sets, "set");
+        Assert.assertEquals(Reps, reps, "rep");
+        Assert.assertEquals(Rests, rests, "rests");
+
     }
 }
