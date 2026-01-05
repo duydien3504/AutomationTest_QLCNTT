@@ -1,24 +1,26 @@
 package tests;
 
-
-import com.aventstack.extentreports.ExtentTest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import pages.MusclePage;
 import pages.SigninForm;
 import utils.ExtentTestManager;
 import utils.TestConfig;
 
-@Listeners(ExtentTestNGListener.class)
-public class SigninTest {
+public class MuscleTest {
     private Playwright playwright;
     private Browser browser;
     private BrowserContext browserContext;
     private Page page;
     private SigninForm signinForm;
+    private MusclePage musclePage;
 
     @BeforeClass
     public void setupClass() {
@@ -31,6 +33,7 @@ public class SigninTest {
         browserContext = browser.newContext(TestConfig.getNewContextOptions());
         page = browserContext.newPage();
         signinForm = new SigninForm(page);
+        musclePage = new MusclePage(page);
     }
 
     @AfterClass
@@ -44,7 +47,7 @@ public class SigninTest {
     }
 
     @Test
-    public void tc_SigninSuccessful() {
+    public void tc_CreateNewMuscle() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
         ExtentTestManager.info("Mo popup signin");
@@ -56,46 +59,51 @@ public class SigninTest {
         ExtentTestManager.info("Dang Nhap");
         signinForm.Signin(email,password);
 
-        Assert.assertTrue(signinForm.isDisplayLogoutButton());
+        ExtentTestManager.info("Mo dashboard");
+        musclePage.displayAdminPage();
+
+        ExtentTestManager.info("Mo form tao nhom co");
+        musclePage.displayeCreateMuscleForm();
+
+        String muscleName = TestConfig.getNewMucle();
+        String description = TestConfig.getDescriptionMuscle();
+        String url = TestConfig.getThumbnailUrl();
+
+        ExtentTestManager.info("Tao nhom co");
+        musclePage.createNewMuscle(muscleName,description,url);
+
+        page.waitForTimeout(1000);
+
+        Assert.assertTrue(musclePage.checkInfoMuscle(muscleName, muscleName));
     }
 
     @Test
-    public void tc_SigninFailwithInvalidAccount() {
+    public void tc_CreateNewMusclewithName() {
         ExtentTestManager.info("Truy cap website");
         signinForm.navigatetoWebsite();
         ExtentTestManager.info("Mo popup signin");
         signinForm.displayLoginForm();
 
-        String email = TestConfig.getInvalidLoginEmail();
-        String password = TestConfig.getInvalidLoginPassword();
+        String email = TestConfig.getLoginEmail();
+        String password = TestConfig.getLoginPassword();
 
         ExtentTestManager.info("Dang Nhap");
         signinForm.Signin(email,password);
 
-        Assert.assertFalse(signinForm.isDisplayLogoutButton());
-    }
+        ExtentTestManager.info("Mo dashboard");
+        musclePage.displayAdminPage();
 
-    @Test
-    public void tc_NavigatetoForgotPass() {
-        ExtentTestManager.info("Truy cap website");
-        signinForm.navigatetoWebsite();
-        ExtentTestManager.info("Mo popup signin");
-        signinForm.displayLoginForm();
-        ExtentTestManager.info("Mo form quen mat khau");
-        signinForm.displayForgotPass();
+        ExtentTestManager.info("Mo form tao nhom co");
+        musclePage.displayeCreateMuscleForm();
 
-        Assert.assertTrue(signinForm.isDislayForgotPasswordForm());
-    }
+        ExtentTestManager.info("Tao nhom co");
+        String muscleName = TestConfig.getMuscle1();
+        musclePage.fillNameMuscle(muscleName);
 
-    @Test
-    public void tc_NavigatetoSignup() {
-        ExtentTestManager.info("Truy cap website");
-        signinForm.navigatetoWebsite();
-        ExtentTestManager.info("Mo popup signin");
-        signinForm.displayLoginForm();
-        ExtentTestManager.info("Mo form dang ky");
-        signinForm.displaySignup();
+        musclePage.clickCreate();
 
-        Assert.assertTrue(signinForm.isDisplaySignUpForm());
+        page.waitForTimeout(1000);
+
+        Assert.assertTrue(musclePage.checkInfoMuscle(muscleName, muscleName));
     }
 }

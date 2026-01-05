@@ -11,4 +11,5 @@ public class HomepageConstants {
     //Nav
     public static final String lichtapItem = "//a[contains(text(), 'Lịch tập')]";
 
+    public static final String adminItem = "//a[@href='/admin']";
 }

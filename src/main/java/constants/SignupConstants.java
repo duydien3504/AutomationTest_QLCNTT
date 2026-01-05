@@ -7,4 +7,6 @@ public class SignupConstants {
     public static final String registerButton = "//button[@type='submit']";
     public static final String messageEmailExists = "//div[contains(text(), 'Email already exists')]";
     public static final String textForgotPW = "//button[@type='button' and contains(text(), 'Forgot your password?')]";
+    public static final String messagesucess = "//div[@role='status' and contains(text(), 'Đăng ký thành công!')]";
+    public static final String messageWeakPass  = "//div[contains(text(), 'Password must be at least 8 characters')]";
 }

@@ -35,6 +35,14 @@ public class SigninForm extends BasePage{
         clickElement(logoutButton);
     }
 
+    public void displayForgotPass() {
+        clickElement(forgotBtn);
+    }
+
+    public void displaySignup() {
+        clickElement(signupBtn);
+    }
+
     public boolean isDisplayLogoutButton() {
         try {
             page.locator(logoutButton)
@@ -50,6 +58,30 @@ public class SigninForm extends BasePage{
     public boolean isDisplaySigninButton() {
         try {
             page.locator(signInButton)
+                    .waitFor(new Locator.WaitForOptions()
+                            .setState(WaitForSelectorState.VISIBLE)
+                            .setTimeout(1000));
+            return true;
+        } catch (PlaywrightException e) {
+            return false;
+        }
+    }
+
+    public boolean isDislayForgotPasswordForm() {
+        try {
+            page.locator(titleForgorPass)
+                    .waitFor(new Locator.WaitForOptions()
+                            .setState(WaitForSelectorState.VISIBLE)
+                            .setTimeout(1000));
+            return true;
+        } catch (PlaywrightException e) {
+            return false;
+        }
+    }
+
+    public boolean isDisplaySignUpForm() {
+        try {
+            page.locator(titleSignup)
                     .waitFor(new Locator.WaitForOptions()
                             .setState(WaitForSelectorState.VISIBLE)
                             .setTimeout(1000));

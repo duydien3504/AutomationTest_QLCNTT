@@ -65,6 +65,59 @@ public class TestConfig {
                 .setArgs(Arrays.asList("--start-maximized"));
     }
 
+
+    /*public static BrowserType getBrowserType(Playwright playwright) {
+        String browser = getProperty("browser");
+
+        switch (browser.toLowerCase()) {
+            case "chrome":
+            case "chromium":
+                return playwright.chromium();
+
+            case "firefox":
+                return playwright.firefox();
+
+            case "safari":
+            case "webkit":
+                return playwright.webkit();
+
+            default:
+                throw new RuntimeException("Unsupported browser: " + browser);
+        }
+    }
+
+    public static BrowserType.LaunchOptions getBrowserLaunchOptions() {
+        String browser = getProperty("browser");
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions()
+                .setHeadless(false);
+        if (browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("chromium")) {
+            options.setChannel("chrome")
+                    .setArgs(Arrays.asList("--start-maximized"));
+        }
+        if (browser.equalsIgnoreCase("firefox")) {
+            // no extra config needed
+        }
+        if (browser.equalsIgnoreCase("safari") || browser.equalsIgnoreCase("webkit")) {
+            // WebKit always headed
+        }
+
+        return options;
+    }
+
+    public static Browser.NewContextOptions getNewContextOptions() {
+        try {
+            Files.createDirectories(Paths.get("videos"));
+        } catch (IOException ignored) {}
+
+        return new Browser.NewContextOptions()
+                .setViewportSize(null)
+                .setIgnoreHTTPSErrors(true)
+                .setRecordVideoDir(Paths.get("videos"))
+                .setRecordVideoSize(1280, 720);
+    }*/
+
+
+
     public static String getBaseUrl() {
         return getProperty("base_url");
     }
@@ -181,5 +234,39 @@ public class TestConfig {
         return getProperty("test.rests");
     }
 
+    public static String getEmail() {
+        return getProperty("test.email");
+    }
 
+    public static String getEmail1() {
+        return getProperty("test.email1");
+    }
+
+    public static String getWeakPass() {
+        return getProperty("test.weakpassword");
+    }
+
+    public static String getBirthdayOver120() {
+        return getProperty("test.birthday.over120");
+    }
+
+    public static String getBirthdayUnder13() {
+        return getProperty("test.birthday.under13");
+    }
+
+    public static String getNewMucle() {
+        return getProperty("test.newmuscle");
+    }
+
+    public static String getDescriptionMuscle() {
+        return getProperty("test.muscle.description");
+    }
+
+    public static String getThumbnailUrl() {
+        return getProperty("test.muscle.url");
+    }
+
+    public static String getMuscle1() {
+        return getProperty("test.newmuscle1");
+    }
 }

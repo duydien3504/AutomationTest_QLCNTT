@@ -58,7 +58,7 @@ public class SignupTest {
         signupForm.signup(email,password,fullname);
         page.waitForTimeout(1500);
 
-        Assert.assertFalse(signupForm.isDisplaySignupButton());
+        Assert.assertTrue(signupForm.isDisplayMessageSuccess());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class SignupTest {
         ExtentTestManager.info("Dang ky");
         signupForm.signup(email, password, fullname);
 
-        Assert.assertTrue(signupForm.isDisplaySignupButton());
+        Assert.assertFalse(signupForm.isDisplayMessageSuccess());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class SignupTest {
         ExtentTestManager.info("Mo form dang ky");
         signupForm.displaySignupForm();
 
-        String email = TestConfig.getSignupEmail();
+        String email = TestConfig.getEmail();
         String password = TestConfig.getSignupPassword();
         String fullname = TestConfig.getShortFullname();
 
@@ -113,6 +113,25 @@ public class SignupTest {
         signupForm.signup(email, password, fullname);
         page.waitForTimeout(1500);
 
-        Assert.assertTrue(signupForm.isDisplaySignupButton());
+        Assert.assertFalse(signupForm.isDisplayMessageSuccess());
+    }
+
+    @Test
+    public void tc_SignupWithWeakPassword() {
+        ExtentTestManager.info("Truy cap website");
+        signupForm.navigatetoWebsite();
+
+        ExtentTestManager.info("Mo form dang ky");
+        signupForm.displaySignupForm();
+
+        String email = TestConfig.getEmail1();
+        String password = TestConfig.getWeakPass();
+        String fullname = TestConfig.getFullName();
+
+        ExtentTestManager.info("Dang ky");
+        signupForm.signup(email, password, fullname);
+        page.waitForTimeout(1500);
+
+        Assert.assertFalse(signupForm.isDisplayMessageSuccess() && signupForm.isDisplayMessageWeakPass());
     }
 }

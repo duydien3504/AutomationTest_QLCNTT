@@ -47,6 +47,11 @@ public class ProfilePage extends BasePage{
         clickElement(saveButton);
     }
 
+    public void ClickSave() {
+        selectGender("Other");
+        clickElement(saveButton);
+    }
+
     public boolean isDisplayMessageSuccess() {
         try {
             page.locator(messageSuccessfull)
@@ -71,5 +76,11 @@ public class ProfilePage extends BasePage{
                 && Objects.equals(birtdayTxt, birtday)
                 && Objects.equals(goalTxt, goal)
                 && Objects.equals(levelTxt, level);
+    }
+
+    public boolean idDisplayUpdateBirthdate(String birtday) {
+        String birtdayTxt = page.locator(birthday).innerText().trim();
+
+        return Objects.equals(birtdayTxt, birtday);
     }
 }

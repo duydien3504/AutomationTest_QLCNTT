@@ -86,4 +86,59 @@ public class EditProfileTest {
         //So sanh value
         Assert.assertTrue(profilePage.checkInfoAfUpdate(fullname, gender.toLowerCase(), date, goal, level));
     }
+
+    @Test
+    public void TC_EditBirthday_Over120() {
+        ExtentTestManager.info("Truy cap website");
+        signinForm.navigatetoWebsite();
+        ExtentTestManager.info("Mo popup signin");
+        signinForm.displayLoginForm();
+
+        String email = TestConfig.getLoginEmail();
+        String password = TestConfig.getLoginPassword();
+
+        ExtentTestManager.info("Dang Nhap");
+        signinForm.Signin(email,password);
+
+        ExtentTestManager.info("Truy cap trang Profile");
+        profilePage.displayProfilePage();
+
+        ExtentTestManager.info("Mo form chinh sua Profile");
+        profilePage.displayEditProfileForm();
+
+        String date = TestConfig.getBirthdayOver120();
+        profilePage.selectBirtDate(date);
+
+        profilePage.ClickSave();
+
+        Assert.assertFalse(profilePage.idDisplayUpdateBirthdate(date));
+    }
+
+    @Test
+    public void tc_EditBirthday_Under13() {
+        ExtentTestManager.info("Truy cap website");
+        signinForm.navigatetoWebsite();
+        ExtentTestManager.info("Mo popup signin");
+        signinForm.displayLoginForm();
+
+        String email = TestConfig.getLoginEmail();
+        String password = TestConfig.getLoginPassword();
+
+        ExtentTestManager.info("Dang Nhap");
+        signinForm.Signin(email,password);
+
+        ExtentTestManager.info("Truy cap trang Profile");
+        profilePage.displayProfilePage();
+
+        ExtentTestManager.info("Mo form chinh sua Profile");
+        profilePage.displayEditProfileForm();
+
+        String date = TestConfig.getBirthdayUnder13();
+        profilePage.selectBirtDate(date);
+
+        profilePage.ClickSave();
+
+        Assert.assertFalse(profilePage.idDisplayUpdateBirthdate(date));
+    }
+
 }
